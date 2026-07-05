@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NERO · Fragancias de autor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ─── RESET & BASE ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8f5f0;
+            color: #1a1a1a;
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8f5f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d48166;
+            border-radius: 10px;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(248, 245, 240, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: padding 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+        .logo span {
+            color: #d48166;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .nav-links a {
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+            color: #6b6560;
+        }
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d48166;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1.8rem;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+        .nav-actions a {
+            color: #6b6560;
+            transition: color 0.3s ease;
+        }
+        .nav-actions a:hover {
+            color: #1a1a1a;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            background: #f8f5f0;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero .badge {
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #d48166;
+            border: 1px solid rgba(212, 129, 102, 0.2);
+            padding: 0.4rem 1.5rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            background: rgba(248, 245, 240, 0.8);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 .highlight {
+            color: #d48166;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #6b6560;
+            max-width: 440px;
+            margin-bottom: 2.8rem;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: #f8f5f0;
+            padding: 0.9rem 3rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Satoshi', sans-serif;
+        }
+        .btn-primary:hover {
+            background: #d48166;
+            transform: scale(1.02);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1a1a1a;
+            padding: 0.9rem 3rem;
+            border-radius: 60px;
+            font-weight: 400;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Satoshi', sans-serif;
+        }
+        .btn-outline:hover {
+            border-color: #d48166;
+            background: rgba(212, 129, 102, 0.05);
+        }
+
+        .hero-image {
+            flex: 1;
+            min-height: 400px;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            background: #f0ebe4;
+        }
+
+        .hero-image img {
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .hero-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* ─── SECCIÓN "QUÉ NECESITAS SENTIR" ─── */
+        .section-quiz {
+            padding: 5rem 5% 4rem;
+            background: #ffffff;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .section-quiz .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-quiz h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
+        .section-quiz h2 span {
+            color: #d48166;
+        }
+        .section-quiz .sub {
+            color: #8a837a;
+            font-size: 1rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .quiz-card {
+            background: #f8f5f0;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: 20px;
+            padding: 1.8rem 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.35s ease;
+        }
+        .quiz-card:hover {
+            background: #ffffff;
+            border-color: #d48166;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(212, 129, 102, 0.08);
+        }
+        .quiz-card .emoji {
+            font-size: 2.4rem;
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+        .quiz-card h4 {
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+        .quiz-card p {
+            font-size: 0.8rem;
+            color: #8a837a;
+            margin-top: 0.3rem;
+        }
+
+        .quiz-result {
+            background: #f8f5f0;
+            border-radius: 30px;
+            padding: 2.5rem 3rem;
+            border: 1px solid rgba(212, 129, 102, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .quiz-result .texto {
+            font-size: 0.9rem;
+            color: #6b6560;
+        }
+        .quiz-result .texto strong {
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+        .quiz-result .btn-primary {
+            padding: 0.6rem 2.2rem;
+            font-size: 0.7rem;
+        }
+
+        /* ─── FRAGANCIAS DESTACADAS ─── */
+        .section-fragancias {
+            padding: 5rem 5% 4rem;
+            background: #f8f5f0;
+        }
+
+        .section-fragancias .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-fragancias .header-sec {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+        .section-fragancias .header-sec h2 {
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        .section-fragancias .header-sec h2 span {
+            color: #d48166;
+        }
+        .section-fragancias .header-sec a {
+            color: #d48166;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        .section-fragancias .header-sec a:hover {
+            border-color: #d48166;
+        }
+
+        .grid-fragancias {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .fragancia-card {
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: all 0.4s ease;
+        }
+        .fragancia-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 129, 102, 0.2);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        .fragancia-card .img-wrap {
+            height: 280px;
+            overflow: hidden;
+            background: #f0ebe4;
+            position: relative;
+        }
+
+        .fragancia-card .img-wrap img {
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .fragancia-card:hover .img-wrap img {
+            transform: scale(1.04);
+        }
+
+        .fragancia-card .img-wrap .etiqueta {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            font-weight: 700;
+        }
+
+        .fragancia-card .info {
+            padding: 1.5rem 1.5rem 2rem;
+        }
+        .fragancia-card .info h4 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+        .fragancia-card .info .notas {
+            font-size: 0.75rem;
+            color: #8a837a;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .fragancia-card .info .precio {
+            margin-top: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #d48166;
+        }
+        .fragancia-card .info .precio small {
+            font-weight: 300;
+            font-size: 0.7rem;
+            color: #b0a89e;
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 4rem 5% 3rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            background: #ffffff;
+        }
+
+        footer .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        footer .logo-footer {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+        }
+        footer .logo-footer span {
+            color: #d48166;
+        }
+        footer .footer-grid p {
+            color: #8a837a;
+            font-size: 0.85rem;
+            max-width: 260px;
+            margin-top: 0.5rem;
+        }
+        footer h5 {
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #d48166;
+            margin-bottom: 1rem;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 0.6rem;
+        }
+        footer ul a {
+            color: #8a837a;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+        footer ul a:hover {
+            color: #1a1a1a;
+        }
+
+        footer .bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.7rem;
+            color: #b0a89e;
+            letter-spacing: 1px;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 10rem;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .hero-image {
+                width: 100%;
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 5%;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+            .nav-links {
+                gap: 1.2rem;
+                font-size: 0.6rem;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                border-top: 1px solid rgba(0, 0, 0, 0.04);
+                padding-top: 0.8rem;
+            }
+            .nav-actions {
+                gap: 1rem;
+                font-size: 0.7rem;
+            }
+            .quiz-result {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+            footer .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            .fragancia-card .img-wrap {
+                height: 220px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            .hero-actions .btn-primary,
+            .hero-actions .btn-outline {
+                width: 100%;
+                text-align: center;
+            }
+            .grid-fragancias {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .fragancia-card .img-wrap {
+                height: 180px;
+            }
+            footer .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── NAV ─── -->
+    <nav>
+        <div class="logo">NER<span>O</span></div>
+        <div class="nav-links">
+            <a href="#">Fragancias</a>
+            <a href="#">El ritual</a>
+            <a href="#">Curadores</a>
+            <a href="#">Ediciones</a>
+        </div>
+        <div class="nav-actions">
+            <a href="#">🔍</a>
+            <a href="#">Mi cuenta</a>
+            <a href="#">🛒 (0)</a>
+        </div>
+    </nav>
+
+    <!-- ─── HERO ─── -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">✨ Edición 2026 · Lanzamiento</span>
+            <h1>
+                El aroma que<br />
+                <span class="highlight">no sabías que llevabas</span>
+            </h1>
+            <p>
+                En NERO no vendemos perfumes. Creamos estados de ánimo líquidos.
+                Cada gota cuenta una historia que solo tú puedes escribir.
+            </p>
+            <div class="hero-actions">
+                <a href="#" class="btn-primary">Descubrir fragancias</a>
+                <a href="#" class="btn-outline">Hacer el test</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img 
+                src="https://images.unsplash.com/photo-1541643600911-4de74b6b0e6e?w=800&h=600&fit=crop&crop=center" 
+                alt="Frasco de perfume de lujo sobre superficie elegante" 
+                loading="lazy"
+            />
+        </div>
+    </section>
+
+    <!-- ─── QUIZ / "¿QUÉ NECESITAS SENTIR?" ─── -->
+    <section class="section-quiz">
+        <div class="container">
+            <h2>¿Qué necesitas <span>sentir</span> hoy?</h2>
+            <p class="sub">Elige tu estado de ánimo y te mostraremos tu esencia.</p>
+
+            <div class="quiz-grid">
+                <div class="quiz-card">
+                    <span class="emoji">⚡</span>
+                    <h4>Energía</h4>
+                    <p>Para empezar el día con chispa</p>
+                </div>
+                <div class="quiz-card">
+                    <span class="emoji">🌙</span>
+                    <h4>Misterio</h4>
+                    <p>Para la noche y el magnetismo</p>
+                </div>
+                <div class="quiz-card">
+                    <span class="emoji">🌿</span>
+                    <h4>Bienestar</h4>
+                    <p>Piel, calma y conexión</p>
+                </div>
+                <div class="quiz-card">
+                    <span class="emoji">🔥</span>
+                    <h4>Rebeldía</h4>
+                    <p>Para romper las reglas</p>
+                </div>
+            </div>
+
+            <div class="quiz-result">
+                <span class="texto">
+                    ⚡ <strong>Energía</strong> · Te recomendamos <strong>“Amanecer en Seúl”</strong> 
+                    — cítricos, té matcha y un toque de pimienta rosa.
+                </span>
+                <a href="#" class="btn-primary">Ver más</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── FRAGANCIAS DESTACADAS ─── -->
+    <section class="section-fragancias">
+        <div class="container">
+            <div class="header-sec">
+                <h2>Ediciones <span>limitadas</span></h2>
+                <a href="#">Ver todas →</a>
+            </div>
+
+            <div class="grid-fragancias">
+                <!-- Card 1 -->
+                <div class="fragancia-card">
+                    <div class="img-wrap">
+                        <img 
+                            src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500&h=600&fit=crop&crop=center" 
+                            alt="Perfume Black Cedar" 
+                            loading="lazy"
+                        />
+                        <span class="etiqueta">Agotando</span>
+                    </div>
+                    <div class="info">
+                        <h4>Black Cedar</h4>
+                        <div class="notas">Madera de cedro · Azafrán · Cuero</div>
+                        <div class="precio">145€ <small>180€</small></div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="fragancia-card">
+                    <div class="img-wrap">
+                        <img 
+                            src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500&h=600&fit=crop&crop=center" 
+                            alt="Perfume Silk Petals" 
+                            loading="lazy"
+                        />
+                        <span class="etiqueta">Nuevo</span>
+                    </div>
+                    <div class="info">
+                        <h4>Silk Petals</h4>
+                        <div class="notas">Rosa turca · Almizcle · Lichi</div>
+                        <div class="precio">125€</div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="fragancia-card">
+                    <div class="img-wrap">
+                        <img 
+                            src="https://images.unsplash.com/photo-1619995745882-f4128ac82ad6?w=500&h=600&fit=crop&crop=center" 
+                            alt="Perfume Smoke & Honey" 
+                            loading="lazy"
+                        />
+                        <span class="etiqueta">Best seller</span>
+                    </div>
+                    <div class="info">
+                        <h4>Smoke & Honey</h4>
+                        <div class="notas">Tabaco · Miel · Vainilla ahumada</div>
+                        <div class="precio">165€</div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="fragancia-card">
+                    <div class="img-wrap">
+                        <img 
+                            src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=500&h=600&fit=crop&crop=center" 
+                            alt="Perfume Solaris" 
+                            loading="lazy"
+                        />
+                        <span class="etiqueta">Edición verano</span>
+                    </div>
+                    <div class="info">
+                        <h4>Solaris</h4>
+                        <div class="notas">Bergamota · Sal marina · Higo</div>
+                        <div class="precio">110€</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── FOOTER ─── -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="logo-footer">NER<span>O</span></div>
+                <p>Fragancias de autor para quienes buscan más que un perfume.</p>
+            </div>
+            <div>
+                <h5>Explorar</h5>
+                <ul>
+                    <li><a href="#">Fragancias</a></li>
+                    <li><a href="#">Ediciones limitadas</a></li>
+                    <li><a href="#">El ritual NERO</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Ayuda</h5>
+                <ul>
+                    <li><a href="#">Envíos y devoluciones</a></li>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Conecta</h5>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Spotify (playlists)</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom">
+            <span>© 2026 NERO · Todos los derechos reservados</span>
+            <span>Hecho con esencia y alma</span>
+        </div>
+    </footer>
+
+</body>
+</html>
